@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkstudio.dao.SelfRatingMapper">
+  <resultMap id="BaseResultMap" type="com.linkstudio.entity.SelfRating">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="score_q1" jdbcType="INTEGER" property="scoreQ1" />
+    <result column="score_q2" jdbcType="INTEGER" property="scoreQ2" />
+    <result column="score_q3" jdbcType="INTEGER" property="scoreQ3" />
+    <result column="score_q4" jdbcType="INTEGER" property="scoreQ4" />
+    <result column="score_q5" jdbcType="INTEGER" property="scoreQ5" />
+
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, stu_id,branch_name,school_name, score_q1, score_q2, score_q3, score_q4, score_q5,
+    time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from self_rating
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectbyschool"  resultType="HashMap">
+    select school_name,
+    sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+    sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+    sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+    sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+    sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+    sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+    sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+    sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+    sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+    sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+    sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+    sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+    sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+    sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+    sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5
+
+
+
+    FROM self_rating
+    group by school_name
+
+
+  </select>
+  <select id="selectbybranch" parameterType="java.lang.String" resultType="HashMap">
+    select branch_name,
+    sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+    sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+    sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+    sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+    sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+    sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+    sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+    sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+    sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+    sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+    sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+    sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+    sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+    sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+    sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5
+
+
+
+    FROM self_rating
+    where school_name = #{schoolName,jdbcType=VARCHAR}
+    group by branch_name
+
+
+  </select>
+  <select id="selectbyall"  resultType="HashMap">
+    select
+    sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+    sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+    sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+    sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+    sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+    sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+    sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+    sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+    sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+    sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+    sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+    sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+    sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+    sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+    sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5
+
+
+
+    FROM self_rating
+
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from self_rating
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkstudio.entity.SelfRating">
+    insert into self_rating (id, stu_id,school_name,branch_name, score_q1,
+      score_q2, score_q3, score_q4, 
+      score_q5,
+      time)
+    values (#{id,jdbcType=INTEGER}, #{stuId,jdbcType=VARCHAR},#{schoolName,jdbcType=VARCHAR},#{branchName,jdbcType=VARCHAR}, #{scoreQ1,jdbcType=INTEGER},
+      #{scoreQ2,jdbcType=INTEGER}, #{scoreQ3,jdbcType=INTEGER}, #{scoreQ4,jdbcType=INTEGER}, 
+      #{scoreQ5,jdbcType=INTEGER},
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+
+
+</mapper>

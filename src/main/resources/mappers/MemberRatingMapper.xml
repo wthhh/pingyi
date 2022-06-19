@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkstudio.dao.MemberRatingMapper">
+  <resultMap id="BaseResultMap" type="com.linkstudio.entity.MemberRating">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="stu_id_rated" jdbcType="VARCHAR" property="stuIdRated" />
+    <result column="stu_id_rating" jdbcType="VARCHAR" property="stuIdRating" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="is_best" jdbcType="SMALLINT" property="isBest" />
+    <result column="is_worst" jdbcType="SMALLINT" property="isWorst" />
+    <result column="is_contact" jdbcType="SMALLINT" property="isContact" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="iden" jdbcType="SMALLINT" property="iden" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, stu_id_rated, stu_id_rating,branch_name,school_name, score, is_best, is_worst, is_contact, time , iden
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member_rating
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectbyschool"  resultType="HashMap">
+   select
+school_name
+  ,
+  sum(qzlow) as qunzhonglow,
+  sum(qzmiddle)as qunzhongmiddle,
+  sum(qzgood)as qunzhonggood,
+  sum(dylow) as dangyuanlow,
+  sum(dymiddle) as dangyuanmiddle,
+  sum(dygood) as dangyuangood,
+sum(l) as low,
+sum(g) as good,
+sum(m) as middle,
+  SUM(
+    CASE WHEN con = 1 AND iden = 2 THEN 1 ELSE 0 END
+  ) AS contact
+FROM
+  (
+  SELECT
+    stu_id_rating,
+    school_name,
+    branch_name,
+    SUM(
+      CASE WHEN score &lt; 3 AND iden = 1 THEN 1 ELSE 0
+    END
+) AS dylow,
+SUM(
+  CASE WHEN score = 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dymiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dygood,
+SUM(
+  CASE WHEN score &lt; 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzlow,
+SUM(
+  CASE WHEN score = 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzmiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzgood,
+SUM(
+  CASE WHEN score &lt; 3 THEN 1 ELSE 0
+END
+) AS l,
+SUM(
+  CASE WHEN score = 3 THEN 1 ELSE 0
+END
+) AS m,
+SUM(
+  CASE WHEN score > 3 THEN 1 ELSE 0
+END
+) AS g,
+iden,
+(
+  CASE SUM(is_contact) WHEN 0 THEN '0' ELSE '1'
+END
+) AS con
+FROM
+  member_rating
+GROUP BY
+  stu_id_rating
+) a
+GROUP BY
+  school_name
+
+
+  </select>
+  <select id="selectbybranch" parameterType="java.lang.String" resultType="HashMap">
+ select
+branch_name
+  ,
+  sum(qzlow) as qunzhonglow,
+  sum(qzmiddle)as qunzhongmiddle,
+  sum(qzgood)as qunzhonggood,
+  sum(dylow) as dangyuanlow,
+  sum(dymiddle) as dangyuanmiddle,
+  sum(dygood) as dangyuangood,
+sum(l) as low,
+sum(g) as good,
+sum(m) as middle,
+  SUM(
+    CASE WHEN con = 1 AND iden = 2 THEN 1 ELSE 0 END
+  ) AS contact
+FROM
+  (
+  SELECT
+    stu_id_rating,
+    school_name,
+    branch_name,
+    SUM(
+      CASE WHEN score &lt; 3 AND iden = 1 THEN 1 ELSE 0
+    END
+) AS dylow,
+SUM(
+  CASE WHEN score = 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dymiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dygood,
+SUM(
+  CASE WHEN score &lt; 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzlow,
+SUM(
+  CASE WHEN score = 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzmiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzgood,
+SUM(
+  CASE WHEN score &lt; 3 THEN 1 ELSE 0
+END
+) AS l,
+SUM(
+  CASE WHEN score = 3 THEN 1 ELSE 0
+END
+) AS m,
+SUM(
+  CASE WHEN score > 3 THEN 1 ELSE 0
+END
+) AS g,
+iden,
+(
+  CASE SUM(is_contact) WHEN 0 THEN '0' ELSE '1'
+END
+) AS con
+FROM
+  member_rating
+where school_name = #{schoolName,jdbcType=VARCHAR}
+
+GROUP BY
+  stu_id_rating
+) a
+GROUP BY
+  branch_name
+
+
+  </select>
+  <select id="selectbyall"  resultType="HashMap">
+select
+
+
+  sum(qzlow) as qunzhonglow,
+  sum(qzmiddle)as qunzhongmiddle,
+  sum(qzgood)as qunzhonggood,
+  sum(dylow) as dangyuanlow,
+  sum(dymiddle) as dangyuanmiddle,
+  sum(dygood) as dangyuangood,
+sum(l) as low,
+sum(g) as good,
+sum(m) as middle,
+  SUM(
+    CASE WHEN con = 1 AND iden = 2 THEN 1 ELSE 0 END
+  ) AS contact
+FROM
+  (
+  SELECT
+    stu_id_rating,
+    school_name,
+    branch_name,
+    SUM(
+      CASE WHEN score &lt; 3 AND iden = 1 THEN 1 ELSE 0
+    END
+) AS dylow,
+SUM(
+  CASE WHEN score = 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dymiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 1 THEN 1 ELSE 0
+END
+) AS dygood,
+SUM(
+  CASE WHEN score &lt; 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzlow,
+SUM(
+  CASE WHEN score = 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzmiddle,
+SUM(
+  CASE WHEN score > 3 AND iden = 2 THEN 1 ELSE 0
+END
+) AS qzgood,
+SUM(
+  CASE WHEN score &lt; 3 THEN 1 ELSE 0
+END
+) AS l,
+SUM(
+  CASE WHEN score = 3 THEN 1 ELSE 0
+END
+) AS m,
+SUM(
+  CASE WHEN score > 3 THEN 1 ELSE 0
+END
+) AS g,
+iden,
+(
+  CASE SUM(is_contact) WHEN 0 THEN '0' ELSE '1'
+END
+) AS con
+FROM
+  member_rating
+GROUP BY
+  stu_id_rating
+) a
+
+
+
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from member_rating
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkstudio.entity.MemberRating">
+    insert into member_rating (id, stu_id_rated, stu_id_rating, school_name,branch_name,
+      score, is_best, is_worst, 
+      is_contact, time,iden)
+    values (#{id,jdbcType=INTEGER}, #{stuIdRated,jdbcType=VARCHAR}, #{stuIdRating,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR},#{branchName,jdbcType=VARCHAR},
+      #{score,jdbcType=VARCHAR}, #{isBest,jdbcType=SMALLINT}, #{isWorst,jdbcType=SMALLINT}, 
+      #{isContact,jdbcType=SMALLINT}, #{time,jdbcType=TIMESTAMP},#{iden,jdbcType=SMALLINT})
+  </insert>
+
+</mapper>

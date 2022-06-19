@@ -1,0 +1,156 @@
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei, '����', Tahoma, Helvetica, Arial,
+		"\5b8b\4f53", sans-serif;
+}
+/* Space out content a bit */
+body {
+	padding-top: 90px;
+	padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header, .marketing, .footer {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #f5c4c7;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+	line-height: 40px;
+	color: #a3151d;
+}
+
+/* Custom page footer */
+hr {
+	background-color: #f5c4c7;
+	color: #f5c4c7;
+	height: 1px;
+	border: 0px;
+	clear: both;
+}
+
+.footer {
+	color: #777;
+}
+
+/* Customize container */
+@media ( min-width : 1050px) {
+	.container {
+		max-width: 1200px;
+	}
+}
+
+.container-narrow>hr {
+	margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	border-bottom: 1px solid #9e151d;
+}
+
+.jumbotron .btn {
+	padding: 14px 24px;
+	font-size: 21px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+	/* Remove the padding we set earlier */
+	.header, .marketing, .footer {
+		padding-right: 0;
+		padding-left: 0;
+	}
+	/* Space out the masthead */
+	.header {
+		margin-bottom: 30px;
+	}
+	/* Remove the bottom border on the jumbotron for visual effect */
+	.jumbotron {
+		border-bottom: 0;
+	}
+}
+
+/*Redefine of header*/
+.header_pic {
+	width: auto;
+	height: 35px;
+}
+
+.header_logo {
+	float: left;
+	display: inline;
+	margin-right: 5px;
+}
+
+.header.header-narrow-fixed {
+	position: fixed;
+	clear: both;
+	max-width: 700px;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.nav-pills>li.active>a {
+	color: #fff;
+	background-color: #a3151d;
+}
+
+.nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+	color: #fff;
+	background-color: #8b1116;
+}
+
+.nav-pills>li.active2>a {
+	color: #fff;
+	background-color: #4D9EB3;
+}
+
+.nav-pills>li.active2>a:hover, .nav-pills>li.active2>a:focus {
+	color: #fff;
+	background-color: #365b65;
+}
+
+
+.bar-list {
+	width: 13em;
+}
+
+.bar-chart-box {
+	max-width: 75%;
+}
+/*Bar chart in table*/
+.bar-chart {
+	display: block;
+	float: left;
+	max-width: 100%;
+	top: 0;
+	left: 0;
+	height: 20px;
+	background: #d66b70;
+	text-indent: -9999px;
+	overflow: hidden;
+	line-height: 2em;
+}
+
+.count {
+	display: block;
+	float: left;
+	top: 0;
+	right: 0;
+	margin: 0 0.3em;
+	text-align: right;
+	color: gray;
+	font-weight: bold;
+	font-size: 0.875em;
+	line-height: 2em;
+}

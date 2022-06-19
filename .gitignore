@@ -1,0 +1,5 @@
+target/
+target/*
+src/main/java/com/linkstudio/com/
+/.settings/
+/.idea/

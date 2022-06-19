@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkstudio.dao.BranchRatingMapper">
+  <resultMap id="BaseResultMap" type="com.linkstudio.entity.BranchRating">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="score_q1" jdbcType="INTEGER" property="scoreQ1" />
+    <result column="score_q2" jdbcType="INTEGER" property="scoreQ2" />
+    <result column="score_q3" jdbcType="INTEGER" property="scoreQ3" />
+    <result column="score_q4" jdbcType="INTEGER" property="scoreQ4" />
+    <result column="score_q5" jdbcType="INTEGER" property="scoreQ5" />
+    <result column="score_q6" jdbcType="INTEGER" property="scoreQ6" />
+    <result column="score_q7" jdbcType="INTEGER" property="scoreQ7" />
+    <result column="score_q8" jdbcType="INTEGER" property="scoreQ8" />
+    <result column="score_q9" jdbcType="INTEGER" property="scoreQ9" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+
+
+
+
+
+
+  <sql id="Base_Column_List">
+    id, stu_id, branch_name, school_name, score_q1, score_q2, score_q3, score_q4, score_q5,
+    score_q6, score_q7, time
+  </sql>
+  <select id="selectbyschool"  resultType="HashMap">
+    select school_name,
+           sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+           sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+           sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+           sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+           sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+           sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+           sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+           sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+           sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+           sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+           sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+           sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+           sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+           sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+           sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5,
+           sum(CASE WHEN score_q6 &lt; 3 THEN 1 ELSE 0 END) as low6,
+           sum(CASE WHEN score_q6 = 3 THEN 1 ELSE 0 END) as middle6,
+           sum(CASE WHEN score_q6 > 3 THEN 1 ELSE 0 END) as high6,
+           sum(CASE WHEN score_q7 &lt; 3 THEN 1 ELSE 0 END) as low7,
+           sum(CASE WHEN score_q7 = 3 THEN 1 ELSE 0 END) as middle7,
+           sum(CASE WHEN score_q7 > 3 THEN 1 ELSE 0 END) as high7,
+           sum(CASE WHEN score_q8 &lt; 3 THEN 1 ELSE 0 END) as low8,
+           sum(CASE WHEN score_q8 = 3 THEN 1 ELSE 0 END) as middle8,
+           sum(CASE WHEN score_q8 > 3 THEN 1 ELSE 0 END) as high8,
+           sum(CASE WHEN score_q9 &lt; 3 THEN 1 ELSE 0 END) as low9,
+           sum(CASE WHEN score_q9 = 3 THEN 1 ELSE 0 END) as middle9,
+           sum(CASE WHEN score_q9 > 3 THEN 1 ELSE 0 END) as high9
+
+
+
+    FROM branch_rating
+    group by school_name
+
+
+  </select>
+  <select id="selectbybranch" parameterType="java.lang.String" resultType="HashMap">
+    select branch_name,
+           sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+           sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+           sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+           sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+           sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+           sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+           sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+           sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+           sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+           sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+           sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+           sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+           sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+           sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+           sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5,
+           sum(CASE WHEN score_q6 &lt; 3 THEN 1 ELSE 0 END) as low6,
+           sum(CASE WHEN score_q6 = 3 THEN 1 ELSE 0 END) as middle6,
+           sum(CASE WHEN score_q6 > 3 THEN 1 ELSE 0 END) as high6,
+           sum(CASE WHEN score_q7 &lt; 3 THEN 1 ELSE 0 END) as low7,
+           sum(CASE WHEN score_q7 = 3 THEN 1 ELSE 0 END) as middle7,
+           sum(CASE WHEN score_q7 > 3 THEN 1 ELSE 0 END) as high7,
+           sum(CASE WHEN score_q8 &lt; 3 THEN 1 ELSE 0 END) as low8,
+           sum(CASE WHEN score_q8 = 3 THEN 1 ELSE 0 END) as middle8,
+           sum(CASE WHEN score_q8 > 3 THEN 1 ELSE 0 END) as high8,
+           sum(CASE WHEN score_q9 &lt; 3 THEN 1 ELSE 0 END) as low9,
+           sum(CASE WHEN score_q9 = 3 THEN 1 ELSE 0 END) as middle9,
+           sum(CASE WHEN score_q9 > 3 THEN 1 ELSE 0 END) as high9
+
+
+
+    FROM branch_rating
+    where school_name = #{schoolName,jdbcType=VARCHAR}
+    group by branch_name
+
+
+  </select>
+  <select id="selectbyall"  resultType="HashMap">
+    select
+           sum(CASE WHEN score_q1 &lt; 3 THEN 1 ELSE 0 END) as low1,
+           sum(CASE WHEN score_q1 = 3 THEN 1 ELSE 0 END) as middle1,
+           sum(CASE WHEN score_q1 > 3 THEN 1 ELSE 0 END) as high1,
+           sum(CASE WHEN score_q2 &lt; 3 THEN 1 ELSE 0 END) as low2,
+           sum(CASE WHEN score_q2 = 3 THEN 1 ELSE 0 END) as middle2,
+           sum(CASE WHEN score_q2 > 3 THEN 1 ELSE 0 END) as high2,
+           sum(CASE WHEN score_q3 &lt; 3 THEN 1 ELSE 0 END) as low3,
+           sum(CASE WHEN score_q3 = 3 THEN 1 ELSE 0 END) as middle3,
+           sum(CASE WHEN score_q3 > 3 THEN 1 ELSE 0 END) as high3,
+           sum(CASE WHEN score_q4 &lt; 3 THEN 1 ELSE 0 END) as low4,
+           sum(CASE WHEN score_q4 = 3 THEN 1 ELSE 0 END) as middle4,
+           sum(CASE WHEN score_q4 > 3 THEN 1 ELSE 0 END) as high4,
+           sum(CASE WHEN score_q5 &lt; 3 THEN 1 ELSE 0 END) as low5,
+           sum(CASE WHEN score_q5 = 3 THEN 1 ELSE 0 END) as middle5,
+           sum(CASE WHEN score_q5 > 3 THEN 1 ELSE 0 END) as high5,
+           sum(CASE WHEN score_q6 &lt; 3 THEN 1 ELSE 0 END) as low6,
+           sum(CASE WHEN score_q6 = 3 THEN 1 ELSE 0 END) as middle6,
+           sum(CASE WHEN score_q6 > 3 THEN 1 ELSE 0 END) as high6,
+           sum(CASE WHEN score_q7 &lt; 3 THEN 1 ELSE 0 END) as low7,
+           sum(CASE WHEN score_q7 = 3 THEN 1 ELSE 0 END) as middle7,
+           sum(CASE WHEN score_q7 > 3 THEN 1 ELSE 0 END) as high7,
+           sum(CASE WHEN score_q8 &lt; 3 THEN 1 ELSE 0 END) as low8,
+           sum(CASE WHEN score_q8 = 3 THEN 1 ELSE 0 END) as middle8,
+           sum(CASE WHEN score_q8 > 3 THEN 1 ELSE 0 END) as high8,
+           sum(CASE WHEN score_q9 &lt; 3 THEN 1 ELSE 0 END) as low9,
+           sum(CASE WHEN score_q9 = 3 THEN 1 ELSE 0 END) as middle9,
+           sum(CASE WHEN score_q9 > 3 THEN 1 ELSE 0 END) as high9
+
+
+
+    FROM branch_rating
+
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from branch_rating
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from branch_rating
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkstudio.entity.BranchRating">
+    insert into branch_rating (id, stu_id, branch_name,
+                               school_name, score_q1, score_q2,
+                               score_q3, score_q4, score_q5,
+                               score_q6, score_q7, score_q8, score_q9, time
+            )
+    values (#{id,jdbcType=INTEGER}, #{stuId,jdbcType=VARCHAR}, #{branchName,jdbcType=VARCHAR},
+            #{schoolName,jdbcType=VARCHAR}, #{scoreQ1,jdbcType=INTEGER}, #{scoreQ2,jdbcType=INTEGER},
+            #{scoreQ3,jdbcType=INTEGER}, #{scoreQ4,jdbcType=INTEGER}, #{scoreQ5,jdbcType=INTEGER},
+            #{scoreQ6,jdbcType=INTEGER}, #{scoreQ7,jdbcType=INTEGER},#{scoreQ8,jdbcType=INTEGER},#{scoreQ9,jdbcType=INTEGER},#{time,jdbcType=TIMESTAMP}
+                   )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linkstudio.entity.BranchRating">
+    insert into branch_rating
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="branchName != null">
+        branch_name,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="scoreQ1 != null">
+        score_q1,
+      </if>
+      <if test="scoreQ2 != null">
+        score_q2,
+      </if>
+      <if test="scoreQ3 != null">
+        score_q3,
+      </if>
+      <if test="scoreQ4 != null">
+        score_q4,
+      </if>
+      <if test="scoreQ5 != null">
+        score_q5,
+      </if>
+      <if test="scoreQ6 != null">
+        score_q6,
+      </if>
+      <if test="scoreQ7 != null">
+        score_q7,
+      </if>
+      <if test="scoreQ8 != null">
+        score_q8,
+      </if>
+      <if test="scoreQ9 != null">
+        score_q9,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="branchName != null">
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreQ1 != null">
+        #{scoreQ1,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ2 != null">
+        #{scoreQ2,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ3 != null">
+        #{scoreQ3,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ4 != null">
+        #{scoreQ4,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ5 != null">
+        #{scoreQ5,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ6 != null">
+        #{scoreQ6,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ7 != null">
+        #{scoreQ7,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ8 != null">
+        #{scoreQ8,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ9 != null">
+        #{scoreQ9,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkstudio.entity.BranchRating">
+    update branch_rating
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="branchName != null">
+        branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreQ1 != null">
+        score_q1 = #{scoreQ1,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ2 != null">
+        score_q2 = #{scoreQ2,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ3 != null">
+        score_q3 = #{scoreQ3,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ4 != null">
+        score_q4 = #{scoreQ4,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ5 != null">
+        score_q5 = #{scoreQ5,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ6 != null">
+        score_q6 = #{scoreQ6,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ7 != null">
+        score_q7 = #{scoreQ7,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ8 != null">
+        score_q8 = #{scoreQ8,jdbcType=INTEGER},
+      </if>
+      <if test="scoreQ9 != null">
+        score_q9 = #{scoreQ9,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linkstudio.entity.BranchRating">
+    update branch_rating
+    set stu_id = #{stuId,jdbcType=VARCHAR},
+        branch_name = #{branchName,jdbcType=VARCHAR},
+        school_name = #{schoolName,jdbcType=VARCHAR},
+        score_q1 = #{scoreQ1,jdbcType=INTEGER},
+        score_q2 = #{scoreQ2,jdbcType=INTEGER},
+        score_q3 = #{scoreQ3,jdbcType=INTEGER},
+        score_q4 = #{scoreQ4,jdbcType=INTEGER},
+        score_q5 = #{scoreQ5,jdbcType=INTEGER},
+        score_q6 = #{scoreQ6,jdbcType=INTEGER},
+        score_q7 = #{scoreQ7,jdbcType=INTEGER},
+        score_q8 = #{scoreQ8,jdbcType=INTEGER},
+        score_q9 = #{scoreQ9,jdbcType=INTEGER},
+        time = #{time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
